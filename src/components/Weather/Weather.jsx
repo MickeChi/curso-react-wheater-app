@@ -19,6 +19,14 @@ const renderState = state =>{
     return <IconState/>;
 };
 
+const validValues = [
+    "cloud",
+    "cloudy",
+    "fog",
+    "sunny",
+    "rain"
+];
+
 const Weather = ({temperature, state}) => {
     return (
         <div>
@@ -32,7 +40,7 @@ const Weather = ({temperature, state}) => {
 
 Weather.propTypes = {
     temperature: PropTypes.number.isRequired,
-    state: PropTypes.string.isRequired
+    state: PropTypes.oneOf(validValues).isRequired
 };
 
 export default Weather;
