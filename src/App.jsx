@@ -1,23 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import WelcomePage from "./pages/WelcomePage";
+import MainPage from "./pages/MainPage";
+import CityPage from "./pages/CityPage";
+import NotFoundPage from './pages/NotFoundPage';
+import Grid from '@material-ui/core/Grid';
 
 const App = () => {
-    return (
-        <div>
-            <h1>App</h1>
-            <Router>
-                <Switch>
-                    <Route></Route>
-                </Switch>
-                
-            </Router>
-        </div>
-    );
-};
-
-App.propTypes = {
-    
+  return (
+    <Grid container justify="center" direction="row">
+      <Grid item xs={12} sm={11} md={10} lg={8} >
+        <Router>
+            <Switch>
+            <Route exact path="/">
+                <WelcomePage />
+            </Route>
+            <Route path="/main">
+                <MainPage></MainPage>
+            </Route>
+            <Route path="/city">
+                <CityPage></CityPage>
+            </Route>
+            <Route>
+                <NotFoundPage></NotFoundPage>
+            </Route>
+            </Switch>
+        </Router>
+      </Grid>
+    </Grid>
+  );
 };
 
 export default App;

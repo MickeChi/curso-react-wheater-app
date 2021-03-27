@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const WelcomePage = props => {
+const NotFoundPage = () => {
     return (
         <div>
-            Welcome Page
+            Not found Page
             <div>
               <Link to="/main">Ir a main</Link>
             </div>
@@ -13,5 +13,4 @@ const WelcomePage = props => {
     );
 };
 
-
-export default WelcomePage;
+export default NotFoundPage;
