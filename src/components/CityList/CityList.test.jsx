@@ -2,10 +2,10 @@ import CityList from "./CityList";
 import { render, fireEvent } from '@testing-library/react'
 
 const cities = [
-    {city: "Mérida", country: "México"},
-    {city: "Monterrey", country: "México"},
-    {city: "Guadalajaraa", country: "México"}
-]
+  { city: "Mérida", country: "México", countryCode: "MX" },
+  { city: "Monterrey", country: "México", countryCode: "MX" },
+  { city: "Guadalajara", country: "México", countryCode: "MX" },
+];
 
 test("CityList renders", async () =>{
     const fnClickOnItem = jest.fn();

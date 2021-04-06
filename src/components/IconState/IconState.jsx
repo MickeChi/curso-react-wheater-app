@@ -1,23 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from '@material-ui/core/Typography'
-import { WiCloud, WiDayCloudy, WiDayFog, WiDaySunny, WiDayRain} from 'react-icons/wi'
+import { WiDayCloudy, WiDaySunny, WiDayRain, WiSnow, WiRaindrop, WiThunderstorm} from 'react-icons/wi'
 
 const stateByName = {
-    cloud: WiCloud,
-    cloudy: WiDayCloudy,
-    fog: WiDayFog,
-    sunny: WiDaySunny,
-    rain: WiDayRain
+  clouds: WiDayCloudy,
+  clear: WiDaySunny,
+  rain: WiDayRain,
+  snow: WiSnow,
+  drizzle: WiRaindrop,
+  thunderstorm: WiThunderstorm,
 };
 
 export const validValues = [
-    "cloud",
-    "cloudy",
-    "fog",
-    "sunny",
-    "rain"
-];
+         "clouds",
+         "clear",
+         "rain",
+         "snow",
+         "drizzle",
+         "thunderstorm",
+       ];
 
 const IconState = ({state}) => {
     const StateIconName = stateByName[state];

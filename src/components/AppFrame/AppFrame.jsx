@@ -33,7 +33,7 @@ const AppFrame = ({ children }) => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Grid contianer item xs={12} sm={10} md={10} lg={8}>
+      <Grid container item xs={12} sm={10} md={10} lg={8}>
         {children}
       </Grid>
     </Grid>
