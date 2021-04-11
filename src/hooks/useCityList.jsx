@@ -4,17 +4,18 @@ import { getUrlWeather } from './../utils/urls';
 import getAllWeathers from './../mappers/getAllWeathers';
 import { getCityCode } from './../utils/utils';
 
-const useCityList = (cities, onSetAllWeather, allWeather) => {
+const useCityList = (cities, allWeather, onSetAllWeather) => {
   //const [allWeather] = useState({});
   const [error, setError] = useState();
+  
   useEffect(() => {
     const getWeather = async (city, countryCode) => {
-      const url = getUrlWeather(city, countryCode);
+      const url = getUrlWeather({city, countryCode});
 
       try {
         const propName = getCityCode(city, countryCode);
 
-        onSetAllWeather({ [propName] : {}});
+        onSetAllWeather({ [propName]: {} });
 
         const response = await axios.get(url);
         const allWeatherAux = getAllWeathers(response, city, countryCode);

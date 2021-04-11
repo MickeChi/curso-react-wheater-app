@@ -29,9 +29,11 @@ const renderCityAndCountry = (onClickCity) => (cityAndCountry, weather) => {
   );
 };
 
-const CityList = ({ cities, onClickCity, onSetAllWeather, allWeather }) => {
+const CityList = ({ cities, onClickCity, actions, data }) => {
+  const { allWeather } = data;
+  const { onSetAllWeather } = actions;
 
-  const { error, setError } = useCityList(cities, onSetAllWeather, allWeather);
+  const { error, setError } = useCityList(cities, allWeather, onSetAllWeather);
 
   return (
     <div>
@@ -58,7 +60,6 @@ const CityList = ({ cities, onClickCity, onSetAllWeather, allWeather }) => {
 };
 
 CityList.propTypes = {
-  onSetAllWeather: PropTypes.func.isRequired,
   cities: PropTypes.arrayOf(
     PropTypes.shape({
       city: PropTypes.string.isRequired,

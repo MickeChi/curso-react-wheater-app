@@ -12,24 +12,32 @@ import { getCityCode } from './../utils/utils';
 import { getCountryNameByCountryCode } from "../services/citiesServices";
 
 
-const CityPage = ({ onSetAllWeather, allWeather }) => {
-  const {
-    city,
-    countryCode,
-    dataForecastChart,
-    forecastItemList,
-  } = useCityPage();
-  const cities = useMemo(() => [{ city, countryCode }], [city, countryCode]); //Memorización, evita que se ciclen los hooks
-  useCityList(cities, onSetAllWeather, allWeather);
-  const weather = allWeather[getCityCode(city, countryCode)];
-  const country = getCountryNameByCountryCode(countryCode);
-  const state = weather && weather.state;
-  const temperature = weather && weather.temperature;
+const CityPage = ({ actions, data }) => {
+  const { allWeather, allChartData, allForecastItemList } = data;
+  const { onSetAllWeather, onSetChartData, onSetForecastItemList } = actions;
+  const { city, countryCode } = useCityPage(
+    allChartData,
+    allForecastItemList,
+    onSetChartData,
+    onSetForecastItemList
+  );
+
+  const cities = useMemo(() => [{ city, countryCode }], [city, countryCode]);
+
+  useCityList(cities, allWeather, onSetAllWeather);
+
+  const cityCode = getCityCode(city, countryCode);
+
+  const weather = allWeather[cityCode];
+  const chartData = allChartData[cityCode];
+  const forecastItemList = allForecastItemList[cityCode];
+
+  const country = countryCode && getCountryNameByCountryCode(countryCode);
   const humidity = weather && weather.humidity;
   const wind = weather && weather.wind;
-  //const data = dataExample;
-  //const forecastItemList = forecastItemListExample;
-  console.log("datos weater", weather);
+
+  const state = weather && weather.state;
+  const temperature = weather && weather.temperature;
 
   return (
     <AppFrame>
@@ -44,7 +52,7 @@ const CityPage = ({ onSetAllWeather, allWeather }) => {
           )}
         </Grid>
         <Grid item>
-          {dataForecastChart && <ForecastChart data={dataForecastChart} />}
+          {chartData && <ForecastChart data={chartData} />}
         </Grid>
         <Grid item>
           {forecastItemList && <Forecast forecastItemList={forecastItemList} />}

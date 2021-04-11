@@ -1,42 +1,59 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import moment from "moment";
-import "moment/locale/es";
 import { getUrlForecast } from "../utils/urls";
 import { useParams } from 'react-router-dom';
 import getChartData from "./../mappers/getChartData";
 import getForecastItemList from './../mappers/getForecastItemList';
+import { getCityCode } from './../utils/utils';
 
-const useCityPage = () => {
-  const [dataForecastChart, setDataForecastChart] = useState(null);
-  const [forecastItemList, setForecastItemList] = useState(null);
-  const { city, countryCode } = useParams(); 
-
+const useCityPage = (
+  allChartData,
+  allForecastItemList,
+  onSetChartData,
+  onSetForecastItemList
+) => {
+  //const [dataForecastChart, setDataForecastChart] = useState(null);
+  //const [forecastItemList, setForecastItemList] = useState(null);
+  const { city, countryCode } = useParams();
 
   useEffect(() => {
     const getForecast = async () => {
+      const url = getUrlForecast({ city, countryCode });
+      const cityCode = getCityCode(city, countryCode);
       try {
-        
-        const url = getUrlForecast(city, countryCode);
-
         const { data } = await axios.get(url);
-        const dataAux = getChartData(data)
-        const forecastItemListAux = getForecastItemList(data);
-        
-        setDataForecastChart(dataAux);        
-        setForecastItemList(forecastItemListAux);
 
-        //setData(dataExample);
-        //setForecastItemList(forecastItemListExample);
+        const dataAux = getChartData(data);
+
+        onSetChartData({ [cityCode]: dataAux });
+
+        const forecastItemListAux = getForecastItemList(data);
+
+        onSetForecastItemList({ [cityCode]: forecastItemListAux });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     };
+    const cityCode = getCityCode(city, countryCode);
 
-    getForecast();
-  }, [city, countryCode]);
+    if (
+      allChartData &&
+      allForecastItemList &&
+      !allChartData[cityCode] &&
+      !allForecastItemList[cityCode]
+    ) {
+      getForecast();
+    }
+  }, [
+    city,
+    countryCode,
+    onSetChartData,
+    onSetForecastItemList,
+    allChartData,
+    allForecastItemList,
+  ]);
 
-  return { city, dataForecastChart, forecastItemList, countryCode };
+  return { city, countryCode };
 };
 
 export default useCityPage;

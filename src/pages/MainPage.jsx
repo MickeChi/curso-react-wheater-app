@@ -6,8 +6,7 @@ import { Paper } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { getCities } from "../services/citiesServices";
 
-const MainPage = ({ onSetAllWeather, allWeather }) => {
-
+const MainPage = ({ actions, data }) => {
   const history = useHistory();
   const onClickHandler = (city, countryCode) => {
     //history.push permite cambiar la navegacion por programación
@@ -22,8 +21,8 @@ const MainPage = ({ onSetAllWeather, allWeather }) => {
           <CityList
             cities={getCities()}
             onClickCity={onClickHandler}
-            onSetAllWeather={onSetAllWeather}
-            allWeather={allWeather}
+            data={data}
+            actions={actions}
           ></CityList>
         </Paper>
       </Grid>
