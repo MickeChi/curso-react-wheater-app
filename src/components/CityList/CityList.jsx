@@ -29,10 +29,10 @@ const renderCityAndCountry = (onClickCity) => (cityAndCountry, weather) => {
   );
 };
 
-const CityList = ({ cities, onClickCity }) => {
+const CityList = ({ cities, onClickCity, onSetAllWeather, allWeather }) => {
 
-  const {allWeather, error, setError} = useCityList(cities)
-  
+  const { error, setError } = useCityList(cities, onSetAllWeather, allWeather);
+
   return (
     <div>
       {error && (
@@ -58,6 +58,7 @@ const CityList = ({ cities, onClickCity }) => {
 };
 
 CityList.propTypes = {
+  onSetAllWeather: PropTypes.func.isRequired,
   cities: PropTypes.arrayOf(
     PropTypes.shape({
       city: PropTypes.string.isRequired,

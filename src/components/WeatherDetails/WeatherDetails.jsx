@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Typography from "@material-ui/core/Typography";
 
-const WeatherDetails = ({humididty, wind}) => {
+const WeatherDetails = ({humidity, wind}) => {
     return (
         <>
-            <Typography>Humedad: {humididty}%</Typography>
+            <Typography>Humedad: {humidity}%</Typography>
             <Typography>viento: {wind}km/h</Typography>
         </>
     );
 };
 
 WeatherDetails.propTypes = {
-    humididty: PropTypes.number.isRequired,
+    humidity: PropTypes.number.isRequired,
     wind: PropTypes.number.isRequired
 };
 
