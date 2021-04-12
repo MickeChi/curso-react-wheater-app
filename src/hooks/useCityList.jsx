@@ -4,22 +4,22 @@ import { getUrlWeather } from './../utils/urls';
 import getAllWeathers from './../mappers/getAllWeathers';
 import { getCityCode } from './../utils/utils';
 
-const useCityList = (cities, allWeather, onSetAllWeather) => {
+const useCityList = (cities, allWeather, actions) => {
   //const [allWeather] = useState({});
   const [error, setError] = useState();
-  
+
   useEffect(() => {
     const getWeather = async (city, countryCode) => {
-      const url = getUrlWeather({city, countryCode});
+      const url = getUrlWeather({ city, countryCode });
 
       try {
         const propName = getCityCode(city, countryCode);
 
-        onSetAllWeather({ [propName]: {} });
+        actions({ type: "SET_ALL_WEATHER", payload: { [propName]: {} } });
 
         const response = await axios.get(url);
         const allWeatherAux = getAllWeathers(response, city, countryCode);
-        onSetAllWeather(allWeatherAux);
+        actions({ type: "SET_ALL_WEATHER", payload: allWeatherAux }); 
         //setAllWeather((allWeather) => ({  ...allWeather,  ...allWeatherAux }));
       } catch (error) {
         if (error.response) {
@@ -38,7 +38,7 @@ const useCityList = (cities, allWeather, onSetAllWeather) => {
         getWeather(city, countryCode);
       }
     });
-  }, [cities, onSetAllWeather, allWeather]); //Dependencias que cambian
+  }, [cities, allWeather]); //Dependencias que cambian
 
   return { error, setError };
 };

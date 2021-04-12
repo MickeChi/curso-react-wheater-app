@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { getUrlForecast } from "../utils/urls";
 import { useParams } from 'react-router-dom';
@@ -6,12 +6,7 @@ import getChartData from "./../mappers/getChartData";
 import getForecastItemList from './../mappers/getForecastItemList';
 import { getCityCode } from './../utils/utils';
 
-const useCityPage = (
-  allChartData,
-  allForecastItemList,
-  onSetChartData,
-  onSetForecastItemList
-) => {
+const useCityPage = (allChartData, allForecastItemList, actions) => {
   //const [dataForecastChart, setDataForecastChart] = useState(null);
   //const [forecastItemList, setForecastItemList] = useState(null);
   const { city, countryCode } = useParams();
@@ -25,11 +20,13 @@ const useCityPage = (
 
         const dataAux = getChartData(data);
 
-        onSetChartData({ [cityCode]: dataAux });
-
+        actions({ type: "SET_CHART_DATA", payload: { [cityCode]: dataAux } });
         const forecastItemListAux = getForecastItemList(data);
 
-        onSetForecastItemList({ [cityCode]: forecastItemListAux });
+        actions({
+          type: "SET_FORECAST_ITEM_LIST",
+          payload: { [cityCode]: forecastItemListAux },
+        });
       } catch (error) {
         console.log(error);
       }
@@ -44,14 +41,7 @@ const useCityPage = (
     ) {
       getForecast();
     }
-  }, [
-    city,
-    countryCode,
-    onSetChartData,
-    onSetForecastItemList,
-    allChartData,
-    allForecastItemList,
-  ]);
+  }, [city, countryCode, actions, allChartData, allForecastItemList]);
 
   return { city, countryCode };
 };
